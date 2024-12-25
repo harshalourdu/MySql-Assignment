@@ -1,0 +1,178 @@
+Q1. What is a database? Differentiate between SQL and NoSQL databases.
+
+Q2. What is DDL? Explain why CREATE, DROP, ALTER, and TRUNCATE are used with an example.
+
+Q3. What is DML? Explain INSERT, UPDATE, and DELETE with an example.
+
+Q4. What is DQL? Explain SELECT with an example.
+
+Q5. Explain Primary Key and Foreign Key.
+
+Q6. Write a python code to connect MySQL to python. Explain the cursor() and execute() method.
+
+Q7. Give the order of execution of SQL clauses in an SQL query.
+
+
+# 1.
+|Feature	|SQL Databases	|NoSQL Databases|
+|-----------|---------------|---------------|
+
+|Full form  |Structured Query Language (SQL)|Not Only SQL (NoSQL)|
+
+|Data Structure|Tables with rows and columns (relational)|Varies (key-value, document, column-family, graph)|
+
+|Schema|Fixed, predefined schema	|Schema-less or flexible schema|
+
+|Scalability|	Vertical scaling (adding more power to a single server)	|Horizontal scaling (adding more servers)|
+
+
+# 2.
+
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT
+);
+
+
+DROP: Used to delete a database object like a table, database, or index. Example:
+
+sql
+
+DROP TABLE students;
+
+ALTER: Used to modify an existing database object, such as adding or removing columns or changing data types. Example:
+
+sql
+
+ALTER TABLE students ADD COLUMN email VARCHAR(100);
+
+TRUNCATE: Used to delete all rows from a table, but keeps the structure intact. It is faster than DELETE and cannot be rolled back in most databases. Example:
+
+sql
+
+TRUNCATE TABLE students;
+
+
+# 3.
+
+INSERT: Used to add new rows of data into a table. Example:
+
+sql
+
+INSERT INTO students (student_id, name, age) VALUES (1, 'Alice', 22);
+
+
+UPDATE: Used to modify existing data in a table. Example:
+
+sql
+
+UPDATE students SET age = 23 WHERE student_id = 1;
+
+
+DELETE: Used to remove rows from a table. Example:
+
+sql
+
+DELETE FROM students WHERE student_id = 1;
+
+
+
+# 4.
+
+DQL (Data Query Language) refers to SQL commands used to query data from a database. The main operation in DQL is the SELECT command, which retrieves data based on specified conditions.
+
+SELECT: Retrieves data from one or more tables. Example:
+sql
+
+SELECT name, age FROM students WHERE age > 20;
+
+
+
+# 5.
+
+Primary Key: A primary key is a unique identifier for each record in a database table. It ensures that each record is uniquely identifiable and prevents duplication. A primary key field cannot contain NULL values.
+
+Example:
+
+sql
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT
+);
+
+
+
+
+# 6. 
+
+import mysql.connector
+
+# Establish connection to MySQL
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="password",
+    database="test_db"
+)
+
+# Create a cursor object
+cursor = db.cursor()
+
+# Example of executing a query
+cursor.execute("SELECT * FROM students")
+
+# Fetch all results
+results = cursor.fetchall()
+
+# Print results
+for row in results:
+    print(row)
+
+# Close the cursor and connection
+cursor.close()
+db.close()
+
+
+# 7.
+
+The general order of execution for SQL clauses is:
+
+FROM: Specifies the tables to retrieve data from.
+
+JOIN: Specifies how tables should be joined together.
+
+WHERE: Filters records based on a specified condition.
+
+GROUP BY: Groups the records into summary rows based on a specified column.
+
+HAVING: Filters the grouped records based on a condition.
+
+SELECT: Specifies which columns or expressions to retrieve.
+
+DISTINCT: Removes duplicate records from the result set.
+
+ORDER BY: Sorts the results based on one or more columns.
+
+LIMIT: Limits the number of rows returned by the query.
+
+SELECT name, age 
+FROM students 
+WHERE age > 20 
+GROUP BY age 
+HAVING COUNT(*) > 1 
+ORDER BY age DESC 
+LIMIT 5;
+
+
+In this query:
+
+The FROM clause specifies the table (students).
+The WHERE clause filters records where age > 20.
+The GROUP BY clause groups the records by age.
+The HAVING clause filters groups that have more than one student.
+The SELECT clause defines the columns to display (name, age).
+The ORDER BY clause sorts the result by age in descending order.
+The LIMIT clause limits the result to 5 rows.
